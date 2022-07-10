@@ -11,11 +11,11 @@ const flash = require('connect-flash');
 const User = require('../src/app/models/User');
 const { mongooseToObject } = require('./util/mongoose');
 
-const port = 3000;
+// const port = 3000;
 app.set('port', process.env.port || 3000);
 
 const server = app.listen(app.get('port'), () =>
-    console.log(`Example app listening at http://localhost:${port}`),
+    console.log(`Example app listening at http://localhost:${app.get('port')}`),
 );
 const io = require('socket.io')(server);
 require('./app/controllers/ChatController')(io);
@@ -25,7 +25,7 @@ const db = require('./config/db');
 db.connect();
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
